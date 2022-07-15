@@ -19,6 +19,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         USER: a
         ACTION: b
+      with:
+        filename: .github/issue-template.md
     # - name: Setup Terraform
     #   uses: hashicorp/setup-terraform@v1
     # - name: Configure AWS credentials
