@@ -1,23 +1,22 @@
-name: terraform_import
+name: create_issue
 
 on:
   repository_dispatch:
-    types: [import]
-
-env:
-  TERRAFORM_ROLE: arn:aws:iam::956204488690:role/terraform-administrator-role
-  AWS_DEFAULT_REGION: us-east-1
+    types: [issue]
 
 jobs:
   terraform:
-    name: "Terraform Import"
+    name: "Create Issue"
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
     - name: payload
-      run: echo ${{github.event.client_payload.account}}
-    - name: Checkout
-      uses: actions/checkout@v3
+      run: echo ${{github.event.client_payload.user}} ${{github.event.client_payload.action}}
+    - uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        USER: ${{github.event.client_payload.user}}
+        ACTION: ${{github.event.client_payload.action}}
     # - name: Setup Terraform
     #   uses: hashicorp/setup-terraform@v1
     # - name: Configure AWS credentials
