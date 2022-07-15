@@ -1,5 +1,7 @@
 name: create_issue
-
+permissions:
+  contents: read
+  issues: write 
 on:
   repository_dispatch:
     types: [issue]
@@ -8,12 +10,11 @@ jobs:
   terraform:
     name: "Create Issue"
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
     - name: payload
       run: echo ${{github.event.client_payload.user}} ${{github.event.client_payload.action}}
     - uses: actions/checkout@v2
-    - uses: JasonEtco/create-an-issue@v2.6.0
+    - uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         USER: a
